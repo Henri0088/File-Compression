@@ -8,6 +8,6 @@ The only thing that caused trouble so far was setting up gradle but after a good
 Next week I will start actually coding the project, I think the best approach would be to first implement one of the algorithms to the point where I can compress
 and decompress .txt files. We'll see how long this takes, but after that I can start implementing my own data structures to use instead of the standard ones.
 
-# Time spent
+## Time spent
 
 Overall the studying and configuring took about 5 hours.
