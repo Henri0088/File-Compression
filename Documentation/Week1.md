@@ -1,6 +1,6 @@
 ## Weekly report 1
 
-This week I have read about Huffman coding and LZW-algorithms. I have also done a good amount of configuration to get a gradle project running.
+This week I have read about Huffman coding and the LZW-algorithm. I have also done a good amount of configuration to get a gradle project running.
 The program itself hasn't been started yet but my project is now set up such that I can start coding without any hassle.
 
 The only thing that caused trouble so far was setting up gradle but after a good amount of googling I think my gradle.build is now structured correctly.
