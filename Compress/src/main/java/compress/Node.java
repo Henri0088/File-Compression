@@ -1,7 +1,11 @@
 
 package compress;
 
-
+/**
+ * Class which is used while constructing and traversing
+ * the binary tree.
+ * @author henri
+ */
 public class Node implements Comparable<Node> {
     
     private String str;

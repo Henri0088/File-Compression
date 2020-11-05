@@ -3,9 +3,14 @@ package compress;
 import java.io.*;
 import java.lang.StringBuilder;
 
+/**
+ * Class for reading UTF-8 encoded data from a file
+ * @author henri
+ */
 public class InputReader implements IOReader {
     
     private BufferedReader reader;
+    
     
     public InputReader(String file) { 
         try {
@@ -15,6 +20,10 @@ public class InputReader implements IOReader {
         }
     }
     
+    /**
+     * Read lines from the file specified in the constructor.
+     * @return String containing lines from the file
+     */
     public String readLines() {
         StringBuilder str = new StringBuilder();
         
@@ -25,7 +34,7 @@ public class InputReader implements IOReader {
         } catch (Exception e) {
             
         }
-        return str.toString().toLowerCase();
+        return str.toString();
     }
     
 }

@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.BitSet;
 
+/**
+ * Class for writing binary data into a file.
+ * @author Henri Sundquist
+ */
 public class BitWriter {
     
     private File file;
@@ -13,8 +17,11 @@ public class BitWriter {
         this.file = new File(file);
     }
     
+    /**
+     * Writes the given binary data into a file.
+     * @param str Binary string to write
+     */
     public void writeBits(String str) {
-        // Convert str to bits.
         BitSet bits = new BitSet(str.length());
 
         for (int i = 0; i < str.length(); i++) {
@@ -32,7 +39,6 @@ public class BitWriter {
         } catch (Exception e) { // Better exception type?
             System.out.println("Writing failed! " + e);
         }
-        
     }
     
 }
