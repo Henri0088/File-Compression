@@ -20,12 +20,12 @@ public class InputReader implements IOReader {
         
         try {
             while (reader.ready()) {
-                str.append(reader.readLine()).append("_");
+                str.append(reader.readLine()).append("\n");
             }
         } catch (Exception e) {
             
         }
-        return str.toString();
+        return str.toString().toLowerCase();
     }
     
 }

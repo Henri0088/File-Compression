@@ -1,14 +1,15 @@
 package compress;
 
-import java.io.*;
-import java.util.PriorityQueue;
-
 public class Main {
 
     public static void main(String[] args) {
         InputReader reader = new InputReader("test.txt");
+        BitWriter writer = new BitWriter("testOutput.bin");
         
-        Huffman huffman = new Huffman(reader);
+        String str = reader.readLines();
+        Huffman huffman = new Huffman();
+        String cStr = huffman.compress(str);
+        writer.writeBits(cStr);
     }
     
 }
