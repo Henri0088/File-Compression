@@ -1,7 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'application'
-
+plugins {
+    id 'application'
+    id 'jacoco'
+    id 'java'
+    id 'checkstyle'
+}
 
 mainClassName = 'compress.Main'
 
@@ -11,7 +13,10 @@ repositories {
 
 dependencies {
     testImplementation     'junit:junit:4.13'
+}
 
+task Javadocs(type: Javadoc) {
+  source = sourceSets.main.allJava
 }
 
 jacocoTestReport {
@@ -22,3 +27,4 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+
