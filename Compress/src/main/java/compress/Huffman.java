@@ -147,7 +147,7 @@ public class Huffman {
         
         String str = "";
         String subBinStr = "";
-        for(int i = 0; i < binStr.length(); i++) {
+        for (int i = 0; i < binStr.length(); i++) {
             subBinStr += binStr.charAt(i);
             if (reverseMap.keySet().contains(subBinStr)) {
                 str += reverseMap.get(subBinStr);

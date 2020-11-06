@@ -17,16 +17,16 @@ public class CPriorityQueue {
         int index = findLast() + 1;
         arr[index] = node;
         
-        while (arr[index/2].getCount() > arr[index].getCount()) {
+        while (arr[index / 2].getCount() > arr[index].getCount()) {
             Node child = arr[index];
-            arr[index] = arr[index/2];
-            arr[index/2] = child;
-            index = index/2;
+            arr[index] = arr[index / 2];
+            arr[index / 2] = child;
+            index = index / 2;
         }
         
         // If the first index is getting close to array length,
         // increase array
-        if (index > arr.length*0.85) {
+        if (index > arr.length * 0.85) {
             increaseSize();
         }
     }
@@ -45,9 +45,9 @@ public class CPriorityQueue {
     }
     
     private void increaseSize() {
-        int newSize = arr.length*2;
+        int newSize = arr.length * 2;
         Node[] newArr = new Node[newSize];
-        System.arraycopy(arr, 1, newArr, 1, arr.length-1);
+        System.arraycopy(arr, 1, newArr, 1, arr.length - 1);
         arr = newArr;
     }
     
