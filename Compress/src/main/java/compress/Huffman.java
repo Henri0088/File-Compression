@@ -3,6 +3,7 @@ package compress;
 
 import java.util.PriorityQueue;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class used to compress a UTF-8 coded String to a String only
@@ -129,5 +130,36 @@ public class Huffman {
             compressedStr += mapping.get(str.charAt(i));
         }
         return compressedStr;
-    }  
+    }
+    
+    /**
+     * Decompress a binary string back into UTF-8. Note that the
+     * method only works for binary strings that have been compressed
+     * using the same instance of Huffman.
+     * @param binStr Binary string
+     * @return UTF-8 Encoded string
+     */
+    public String decompress(String binStr) throws IllegalArgumentException {
+        HashMap<String, Character> reverseMap = new HashMap<>();
+        
+        mapping.entrySet().forEach(entry -> {
+            reverseMap.put(entry.getValue(), entry.getKey());
+        });
+        
+        String str = "";
+        String subBinStr = "";
+        for(int i = 0; i < binStr.length(); i++) {
+            subBinStr += binStr.charAt(i);
+            if (reverseMap.keySet().contains(subBinStr)) {
+                str += reverseMap.get(subBinStr);
+                subBinStr = "";
+            }
+        }
+        
+        if (!subBinStr.equals("")) {
+            throw new IllegalArgumentException("Faulty binary string!");
+        }
+        
+        return str;
+    }
 }
