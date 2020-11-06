@@ -52,4 +52,8 @@ public class Node implements Comparable<Node> {
     public int compareTo(Node node2) {
         return count - node2.getCount();
     }
+    
+    public String toString() {
+        return str + " " + count;
+    }
 }

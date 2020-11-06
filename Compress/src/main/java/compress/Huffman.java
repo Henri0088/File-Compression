@@ -3,7 +3,6 @@ package compress;
 
 import java.util.PriorityQueue;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class used to compress a UTF-8 coded String to a String only
