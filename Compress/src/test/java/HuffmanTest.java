@@ -1,10 +1,10 @@
 
 import compress.Huffman;
 import compress.Node;
-import java.util.PriorityQueue;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import utils.CPriorityQueue;
 
 
 public class HuffmanTest {
@@ -50,10 +50,12 @@ public class HuffmanTest {
         counts[98] = 1;
         counts[99] = 3;
         
-        PriorityQueue<Node> queue = huffman.getQueue(counts);
+        CPriorityQueue queue = huffman.getQueue(counts);
         Node n1 = queue.poll();
         Node n2 = queue.poll();
         Node n3 = queue.poll();
+        
+        System.out.println("n1: " + n1 + " n2: " + n2 + " n3: " + n3);
         
         assertTrue(n1.getStr().equals("b") && n2.getStr().equals("a") && n3.getStr().equals("c"));
     }
@@ -62,7 +64,7 @@ public class HuffmanTest {
     public void testTree() {
         String testStr = "aaabbc";
         int[] counts = huffman.getCounts(testStr);
-        PriorityQueue<Node> queue = huffman.getQueue(counts);
+        CPriorityQueue queue = huffman.getQueue(counts);
         
         Node root = huffman.buildTree(queue);
         assertTrue(root.getStr().equals("acb"));
