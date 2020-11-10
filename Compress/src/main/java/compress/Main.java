@@ -1,7 +1,5 @@
 package compress;
 
-
-
 public class Main {
 
     public static void main(String[] args) {
@@ -16,6 +14,7 @@ public class Main {
         System.out.println(str);
         System.out.println(cStr);
         System.out.println(huffman.decompress(cStr));
+        
     }
     
 }

@@ -1,7 +1,7 @@
 
 package compress;
 
-import java.util.PriorityQueue;
+import utils.CPriorityQueue;
 import java.util.HashMap;
 
 /**
@@ -25,7 +25,7 @@ public class Huffman {
     public String compress(String str) {
         mapping = new HashMap<>();
         int[] symbolArr = getCounts(str);
-        PriorityQueue<Node> queue = getQueue(symbolArr);
+        CPriorityQueue queue = getQueue(symbolArr);
         Node root = buildTree(queue);
         traverse(root, "");
         return convert(str);
@@ -52,8 +52,8 @@ public class Huffman {
      * @param symbolArr Array of size 256
      * @return PriorityQueue of Nodes
      */
-    public PriorityQueue<Node> getQueue(int[] symbolArr) {
-        PriorityQueue<Node> queue = new PriorityQueue<>();
+    public CPriorityQueue getQueue(int[] symbolArr) {
+        CPriorityQueue queue = new CPriorityQueue();
 
         for (char i = 1; i < 256; i++) {
             if (symbolArr[i] == 0) {
@@ -70,7 +70,7 @@ public class Huffman {
      * @param queue PriorityQueue of Nodes
      * @return Root Node of the binary tree
      */
-    public Node buildTree(PriorityQueue<Node> queue) {
+    public Node buildTree(CPriorityQueue queue) {
         while (!queue.isEmpty()) {
             Node n1 = queue.poll();
             Node n2 = queue.poll();
