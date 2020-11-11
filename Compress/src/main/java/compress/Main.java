@@ -10,11 +10,6 @@ public class Main {
         Huffman huffman = new Huffman();
         String cStr = huffman.compress(str);
         writer.writeBits(cStr);
-        
-        System.out.println(str);
-        System.out.println(cStr);
-        System.out.println(huffman.decompress(cStr));
-        
     }
     
 }

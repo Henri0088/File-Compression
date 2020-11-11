@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class Huffman {
     
     private HashMap<Character, String> mapping;
+    private HashMap<String, Character> demapping;
     
     public Huffman() {
     }
@@ -28,7 +29,7 @@ public class Huffman {
         CPriorityQueue queue = getQueue(symbolArr);
         Node root = buildTree(queue);
         traverse(root, "");
-        return convert(str);
+        return convert(str, root);
     }
     
     /**
@@ -109,56 +110,144 @@ public class Huffman {
             mapping.put(n.getStr().charAt(0), i);
             return;
         }
-        if (n.getLeft() != null) {
-            traverse(n.getLeft(), i + "0");
-        }
-        if (n.getRight() != null) {
-            traverse(n.getRight(), i + "1");
-        }
+        traverse(n.getLeft(), i + "0");
+        traverse(n.getRight(), i + "1");
     }
     
     /**
-     * Convert a UTF-8 encoded string to binary code
-     * according to the mapping.
+     * Compress the UTF-8 encoded String into binary.
      * @param str UTF-8 encoded String
      * @return Binary coded String
      */
-    public String convert(String str) {
-        String compressedStr = "";
+    public String convert(String str, Node root) {
+        // Convert the text
+        String text = "";
         for (int i = 0; i < str.length(); i++) {
-            compressedStr += mapping.get(str.charAt(i));
+            text += mapping.get(str.charAt(i));
         }
+        
+        // Convert the tree
+        String tree = convertTree(root, "");
+        
+        String breakpoint = "";
+        for (int i = 1; i <= 9; i++) {
+            breakpoint += "1";
+        }
+        // Concatenate tree -> 8x 1-bits -> text
+        String compressedStr = tree + breakpoint + text;
+        
         return compressedStr;
     }
     
-    /**
-     * Decompress a binary string back into UTF-8. Note that the
-     * method only works for binary strings that have been compressed
-     * using the same instance of Huffman.
-     * @param binStr Binary string
-     * @return UTF-8 Encoded string
-     */
-    public String decompress(String binStr) throws IllegalArgumentException {
-        HashMap<String, Character> reverseMap = new HashMap<>();
-        
-        mapping.entrySet().forEach(entry -> {
-            reverseMap.put(entry.getValue(), entry.getKey());
-        });
-        
-        String str = "";
-        String subBinStr = "";
-        for (int i = 0; i < binStr.length(); i++) {
-            subBinStr += binStr.charAt(i);
-            if (reverseMap.keySet().contains(subBinStr)) {
-                str += reverseMap.get(subBinStr);
-                subBinStr = "";
-            }
+    private String convertTree(Node n, String str) {
+        // Is inner-node, encode 0
+        if (n.getLeft() != null && n.getRight() != null) {
+            str += "0";
+            // Pre-order, left first then right
+            str = convertTree(n.getLeft(), str);
+            str = convertTree(n.getRight(), str);
+            return str;
         }
+        // Is leaf, encode 1
+        str += "1";
         
-        if (!subBinStr.equals("")) {
-            throw new IllegalArgumentException("Faulty binary string!");
+        // Followed by 8 bits corresponding to the UTF-8 character
+        String bits = Integer.toBinaryString(n.getStr().charAt(0));
+        
+        // Add 0's to front to make 8 bits long if needed.
+        if (bits.length() < 8) {
+            int zeroAdd = 8 - bits.length();
+            for (int i = 1; i <= zeroAdd; i++) {
+                bits = "0" + bits;
+            }
+            str += bits;
         }
         
         return str;
+    }
+    
+    public String decompress(String binStr) throws IllegalArgumentException {
+        demapping = new HashMap<>();
+        
+        // Extract binary tree from data and build mapping
+        int i = 0;
+        while (true) {
+            // Leaf, read next 8 bits.
+            if (binStr.charAt(i) == '1') {
+                i++;
+                String charCode = "";
+                for (int subI = 1; subI <= 8; subI++) {
+                    charCode += binStr.charAt(i);
+                    i++;
+                }
+                // Check if next 8 bits are the separator
+                if (charCode.equals("11111111")) {
+                    String tree = "";
+                    for (int b = 0; b < i - 9; b++) {
+                        tree += binStr.charAt(b);
+                    }
+                    buildMapping(tree, 0, "");
+                    break;
+                }
+            } else {
+                i++;
+            }
+        }
+        
+        // i is already past the 9-bit separator
+        // Extract rest of the data
+        String str = "";
+        for (int d = i; d < binStr.length(); d++) {
+            str += binStr.charAt(d);
+        }
+        return mapBinaryStr(str);
+    }
+    
+    private int buildMapping(String tree, int i, String path) {
+        char bin = tree.charAt(i);
+        i++;
+        
+        // Leaf, extract next 8 bits.
+        if (bin == '1') {
+            int byteEnd = i + 8;
+            String Char = "";
+            while (i < byteEnd) {
+                Char += tree.charAt(i);
+                i++;
+            }
+            demapping.put(path, (char) getByteValue(Char));
+            return i;
+        } else if (bin == '0') {
+            i = buildMapping(tree, i, path + "0");
+            i = buildMapping(tree, i, path + "1");
+        }
+        return i;
+    }
+    
+    private String mapBinaryStr(String binStr) {
+        String str = "";
+        String subStr = "";
+        
+        for (int i = 0; i < binStr.length(); i++) {
+            subStr += binStr.charAt(i);
+            if (demapping.keySet().contains(subStr)) {
+                str += demapping.get(subStr);
+                subStr = "";
+            }
+        }
+        return str;
+    }
+    
+    public int getByteValue(String str) {
+        int res = 0; 
+        int val = 128;
+        
+        for (int i = 0; i <= 7; i++) {
+            if (str.charAt(i) == '1') {
+                res += val;
+            }
+            val = val / 2;
+        }
+        return res;
     }
 }
