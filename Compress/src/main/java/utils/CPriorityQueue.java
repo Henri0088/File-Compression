@@ -24,7 +24,7 @@ public class CPriorityQueue {
         heapSize++;
         int index = heapSize;
         arr[index] = node;
-        
+
         while (arr[index / 2].getCount() > arr[index].getCount()) {
             Node child = arr[index];
             arr[index] = arr[index / 2];
@@ -38,6 +38,7 @@ public class CPriorityQueue {
         
         // Increase array size if array is getting full
         if (heapSize > arr.length * 0.5) {
+            System.out.println("yep cock");
             increaseSize();
         }
     }
@@ -49,7 +50,7 @@ public class CPriorityQueue {
      */
     public Node poll() {
         Node node = arr[1];
-        
+
         // Move last to top
         int index = heapSize;
         arr[1] = arr[index];
@@ -97,7 +98,7 @@ public class CPriorityQueue {
     private void increaseSize() {
         int newSize = arr.length * 2;
         Node[] newArr = new Node[newSize];
-        System.arraycopy(arr, 1, newArr, 1, arr.length - 1);
+        System.arraycopy(arr, 0, newArr, 0, arr.length - 1);
         arr = newArr;
     }    
 }
