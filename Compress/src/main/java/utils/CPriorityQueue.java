@@ -38,7 +38,6 @@ public class CPriorityQueue {
         
         // Increase array size if array is getting full
         if (heapSize > arr.length * 0.5) {
-            System.out.println("yep cock");
             increaseSize();
         }
     }
