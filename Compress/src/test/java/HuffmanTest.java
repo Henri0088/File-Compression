@@ -76,13 +76,6 @@ public class HuffmanTest {
         assertTrue(n2.getStr().equals("b") && n2.getCount() == 2);
     }
     
-    @Test 
-    public void testHuffman() {
-        String testStr = "aaabbc";
-        String binStr = huffman.compress(testStr);
-        assertTrue(binStr.equals("000111110"));
-    }
-    
     @Test
     public void testHuffmanDecompression() {
         String testStr = "aaabbc";
