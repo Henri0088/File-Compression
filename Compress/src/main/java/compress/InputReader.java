@@ -1,13 +1,12 @@
 package compress;
 
 import java.io.*;
-import java.lang.StringBuilder;
 
 /**
  * Class for reading UTF-8 encoded data from a file
  * @author henri
  */
-public class InputReader implements IOReader {
+public class InputReader {
     
     private BufferedReader reader;
     
