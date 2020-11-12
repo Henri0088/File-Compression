@@ -1,5 +1,6 @@
 
 import compress.Huffman;
+import compress.InputReader;
 import compress.Node;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -10,13 +11,12 @@ import utils.CPriorityQueue;
 public class HuffmanTest {
     
     private Huffman huffman;
-    
-    public HuffmanTest() {
-    }
+    private InputReader reader;
     
     @Before
     public void setUpClass() {
         huffman = new Huffman();
+        reader = new InputReader("test.txt");
     }
     
     @Test
@@ -77,10 +77,18 @@ public class HuffmanTest {
     }
     
     @Test
-    public void testHuffmanDecompression() {
+    public void testHuffmanSmall() {
         String testStr = "aaabbc";
         String binStr = huffman.compress(testStr);
         String str = huffman.decompress(binStr);
         assertTrue(str.equals(testStr));
     }
+    
+    @Test
+    public void testHuffmanMedium() {
+        String str = reader.readLines();
+        String compressedStr = huffman.compress(str);
+        assertTrue(str.equals(huffman.decompress(compressedStr)));
+    }
+    
 }
