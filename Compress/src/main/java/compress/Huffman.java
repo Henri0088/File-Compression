@@ -48,10 +48,10 @@ public class Huffman {
     }
     
     /**
-     * Initialize a PriorityQueue containing a Node for each
+     * Initialize a CPriorityQueue containing a Node for each
      * character which is present in the given array.
      * @param symbolArr Array of size 256
-     * @return PriorityQueue of Nodes
+     * @return CPriorityQueue of Nodes
      */
     public CPriorityQueue getQueue(int[] symbolArr) {
         CPriorityQueue queue = new CPriorityQueue();
@@ -68,7 +68,7 @@ public class Huffman {
     
     /**
      * Use Nodes to build a binary tree.
-     * @param queue PriorityQueue of Nodes
+     * @param queue CPriorityQueue of Nodes
      * @return Root Node of the binary tree
      */
     public Node buildTree(CPriorityQueue queue) {
@@ -96,17 +96,12 @@ public class Huffman {
     
     /**
      * Recursively traverses a binary tree of Nodes and inserts
-     * character/binary pairs into a HashMap upon reaching a leaf. 
-     * The binary codes for characters are determined by their position in the binary tree. 
-     * The root Node doesn't have a binary code, 
-     * after that the left child will have the parents binary code + "0"
-     * and the right child will have the parents binary code + "1".
+     * character/binary pairs into a HashMap upon reaching a leaf.
      * @param n Node to check next (First call should be to the root Node)
-     * @param i The current binary code of Node n
+     * @param i The current binary code of Node n (First call should be a empty String)
      */
     public void traverse(Node n, String i) {
         if (n.getLeft() == null && n.getRight() == null) {
-            
             mapping.put(n.getStr().charAt(0), i);
             return;
         }
@@ -129,12 +124,14 @@ public class Huffman {
         // Convert the tree
         String tree = convertTree(root, "");
         
-        String breakpoint = "";
+        // Generate 9-bit separator
+        String separator = "";
         for (int i = 1; i <= 9; i++) {
-            breakpoint += "1";
+            separator += "1";
         }
-        // Concatenate tree -> 8x 1-bits -> text
-        String compressedStr = tree + breakpoint + text;
+        
+        // Concatenate tree -> separator -> text
+        String compressedStr = tree + separator + text;
         
         return compressedStr;
     }
@@ -143,12 +140,12 @@ public class Huffman {
         // Is inner-node, encode 0
         if (n.getLeft() != null && n.getRight() != null) {
             str += "0";
-            // Pre-order, left first then right
+            // Convert subtrees in pre-order
             str = convertTree(n.getLeft(), str);
             str = convertTree(n.getRight(), str);
             return str;
         }
-        // Is leaf, encode 1
+        // Is leaf concatenate 1
         str += "1";
         
         // Followed by 8 bits corresponding to the UTF-8 character
@@ -166,10 +163,38 @@ public class Huffman {
         return str;
     }
     
-    public String decompress(String binStr) throws IllegalArgumentException {
+    /**
+     * Decompress a Huffman encoded binary string.
+     * To achieve correct results the binary string must be
+     * in the correct format. UTF-8 Strings compressed with this class
+     * are in such a format.
+     * @param binStr Binary String
+     * @return Decompressed UTF-8 String.
+     */
+    public String decompress(String binStr) {
         demapping = new HashMap<>();
         
         // Extract binary tree from data and build mapping
+        String tree = getTree(binStr);
+        buildMapping(tree, 0, "");
+        
+        // Jump over tree and 9-bit separator
+        int i = tree.length() + 9;
+        
+        // i is now pointing to the first bit of data
+        // Extract rest of the data
+        String str = "";
+        for (int d = i; d < binStr.length(); d++) {
+            str += binStr.charAt(d);
+        }
+        
+        // Convert binary to UTF-8
+        str = mapBinaryStr(str);
+        
+        return str;
+    }
+    
+    private String getTree(String binStr) {
         int i = 0;
         while (true) {
             // Leaf, read next 8 bits.
@@ -186,21 +211,12 @@ public class Huffman {
                     for (int b = 0; b < i - 9; b++) {
                         tree += binStr.charAt(b);
                     }
-                    buildMapping(tree, 0, "");
-                    break;
+                    return tree;
                 }
             } else {
                 i++;
             }
         }
-        
-        // i is already past the 9-bit separator
-        // Extract rest of the data
-        String str = "";
-        for (int d = i; d < binStr.length(); d++) {
-            str += binStr.charAt(d);
-        }
-        return mapBinaryStr(str);
     }
     
     private int buildMapping(String tree, int i, String path) {
@@ -210,12 +226,12 @@ public class Huffman {
         // Leaf, extract next 8 bits.
         if (bin == '1') {
             int byteEnd = i + 8;
-            String Char = "";
+            String charBits = "";
             while (i < byteEnd) {
-                Char += tree.charAt(i);
+                charBits += tree.charAt(i);
                 i++;
             }
-            demapping.put(path, (char) getByteValue(Char));
+            demapping.put(path, (char) getByteValue(charBits));
             return i;
         } else if (bin == '0') {
             i = buildMapping(tree, i, path + "0");
@@ -238,7 +254,7 @@ public class Huffman {
         return str;
     }
     
-    public int getByteValue(String str) {
+    private int getByteValue(String str) {
         int res = 0; 
         int val = 128;
         

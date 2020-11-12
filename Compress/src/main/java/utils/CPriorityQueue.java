@@ -4,13 +4,17 @@ package utils;
 import compress.Node;
 import java.util.Arrays;
 
+/**
+ * Custom data structure which mimics the behavior of
+ * Java's PriorityQueue (Node);
+ */
 public class CPriorityQueue {
     
     private Node[] arr;
     private int heapSize;
     
     public CPriorityQueue() {
-        this.arr = new Node[65];
+        this.arr = new Node[255];
         this.arr[0] = new Node("", 0);
         this.heapSize = 0;
     }
