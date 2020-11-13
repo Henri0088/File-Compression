@@ -16,3 +16,6 @@ bytes get flipped around, which I then flip back. This works but it's probably f
 First priority is getting a LZW-algorithm up and running. After that I have a picture of all the remaining data strcutures that I need to implement.
 I might also start thinking about the UI of my application, most likely a console UI is going to be sufficient.
 
+### Time spent
+
+Coding, testing, documenting and researching LZW took about 16 hours this week.
