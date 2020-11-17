@@ -20,10 +20,6 @@ public class LZW {
         }
     }
     
-    public HashMap getMap() {
-        return this.mapping;
-    }
-    
     public String compress(String str) {
         str += "#";
         int i = 1;
