@@ -1,19 +1,20 @@
 package compress;
 
+import java.util.HashMap;
+
+
 public class Main {
 
     public static void main(String[] args) {
         InputReader reader1 = new InputReader("test.txt");
         BitWriter writer = new BitWriter("testOutput.bin");
         
-        String str = reader1.readLines();
+        LZW lempel = new LZW();
         
-        Huffman huff = new Huffman();
-        String cStr = huff.compress(str);
-        writer.writeBits(cStr);
-        
-        BinaryInputReader reader2 = new BinaryInputReader("testOutput.bin");
-        String dStr = huff.decompress(reader2.readLines());
+        String cStr = lempel.compress("TOBEORNOTTOBEORTOBEORNOT");
+        System.out.println("TOBEORNOTTOBEORTOBEORNOT");
+        System.out.println(cStr);
+        String dStr = lempel.decompress(cStr);
         System.out.println(dStr);
         
     }
