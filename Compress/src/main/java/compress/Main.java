@@ -11,8 +11,9 @@ public class Main {
         
         LZW lempel = new LZW();
         
-        String cStr = lempel.compress("TOBEORNOTTOBEORTOBEORNOT");
-        System.out.println("TOBEORNOTTOBEORTOBEORNOT");
+        String str = reader1.readLines();
+        System.out.println(str);
+        String cStr = lempel.compress(str);
         System.out.println(cStr);
         String dStr = lempel.decompress(cStr);
         System.out.println(dStr);

@@ -29,7 +29,7 @@ public class LZWTest {
         String str = reader.readLines();
         String cStr = lzw.compress(str);
         String dStr = lzw.decompress(cStr);
-        assertTrue(str.equals(lzw.decompress(str)));
+        assertTrue(str.equals(dStr));
     }
     
 }
