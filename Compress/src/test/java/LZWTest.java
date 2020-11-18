@@ -1,5 +1,5 @@
 
-import compress.InputReader;
+import IO.InputReader;
 import compress.LZW;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;

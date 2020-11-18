@@ -1,6 +1,6 @@
 
 import compress.Huffman;
-import compress.InputReader;
+import IO.InputReader;
 import compress.Node;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;

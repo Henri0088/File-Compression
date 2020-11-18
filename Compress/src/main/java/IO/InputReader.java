@@ -1,4 +1,4 @@
-package compress;
+package IO;
 
 import java.io.*;
 

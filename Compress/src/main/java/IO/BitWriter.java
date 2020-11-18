@@ -1,5 +1,5 @@
 
-package compress;
+package IO;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,5 +1,8 @@
 package compress;
 
+import IO.InputReader;
+import IO.BitWriter;
+import IO.BinaryInputReader;
 import java.util.Scanner;
 
 public class Main {

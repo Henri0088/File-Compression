@@ -1,5 +1,5 @@
 
-package compress;
+package IO;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
