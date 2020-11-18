@@ -2,9 +2,11 @@
 package compress;
 
 import java.util.HashMap;
-import java.lang.Math;
-import java.util.Map;
 
+/**
+ * Class used to compress a UTF-8 coded String using Lempel-Ziv-Welch.
+ * @author Henri Sundquist
+ */
 public class LZW {
     
     private HashMap<String, Integer> mapping;
@@ -20,6 +22,11 @@ public class LZW {
         }
     }
     
+    /**
+     * Compresses a UTF-8 encoded string.
+     * @param str UTF-8 encoded string.
+     * @return compressed string containing only 1's and 0's
+     */
     public String compress(String str) {
         str += "#";
         int i = 1;
@@ -37,6 +44,13 @@ public class LZW {
         return compStr;
     }
     
+    /**
+     * Decompresses a string compressed with an LZW algorithm.
+     * Specifically one that uses UTF-8 as the starting dictionary and
+     * encodes in fixed-length 12-bit codes.
+     * @param str LZW-compressed string
+     * @return Decompressed string
+     */
     public String decompress(String str) {
         str += "#";
         int nextCode = 256;

@@ -5,8 +5,7 @@ import utils.CPriorityQueue;
 import java.util.HashMap;
 
 /**
- * Class used to compress a UTF-8 coded String to a String only
- * containing 1's and 0's using Huffman coding.
+ * Class used to compress a UTF-8 coded String using Huffman coding.
  * @author Henri Sundquist
  */
 public class Huffman {
