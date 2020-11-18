@@ -2,6 +2,7 @@
 package compress;
 
 import java.util.HashMap;
+import static java.util.Objects.isNull;
 
 /**
  * Class used to compress a UTF-8 coded String using Lempel-Ziv-Welch.
@@ -36,7 +37,9 @@ public class LZW {
             
             if (!mapping.keySet().contains(str.substring(lastW, i))) {
                 compStr += getBinaryStr(mapping.get(str.substring(lastW, i - 1)));
-                mapping.put(str.substring(lastW, i), mapping.size());
+                if (mapping.size() < 4096) {
+                    mapping.put(str.substring(lastW, i), mapping.size());
+                }
                 lastW = i - 1;
             }
             i++;
@@ -63,11 +66,18 @@ public class LZW {
         while (str.length() > i + 12) {
             String currCode = str.substring(i, i + 12);
             String s = demapping[binStrToInt(currCode, 12)];
-            dStr += s;
             
+            if (isNull(s)) {
+                String prev = demapping[binStrToInt(prevCode, 12)];
+                s = prev + Character.toString(prev.charAt(0));
+            }
+            
+            dStr += s;
             String chr = Character.toString(s.charAt(0));
             demapping[nextCode] = demapping[binStrToInt(prevCode, 12)] + chr;
-            nextCode++;
+            if (nextCode < 4095) {
+                nextCode++;
+            }
             prevCode = currCode;
             i = i + 12;
         }
