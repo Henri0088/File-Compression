@@ -19,7 +19,27 @@ TODO
 
 ### Performance comparison
 
-TODO
+Below are the results of performance testing, all times are in ms.
+
+| File size | File description | LZW Compress | LZW Decompress | Huff Compress | Huff Decompress |
+|-----------|------------------|--------------|----------------|---------------|-----------------|
+| 4130      | Lorem ipsum      | 46           | -              | 76            | -               |
+| 16356     | Lorem ipsum      | 81           | -              | 166           | -               |
+| 65372     | Lorem ipsum      | 312          | -              | 1310          | -               |
+| 152089    | alice29.txt      | 1826         | 424            | 5999          | 27437           |
+
+Lorem ipsum was generated [here](https://www.i-r-genius.com/lipsum.html)
+
+alice29.txt from [here](https://corpus.canterbury.ac.nz/descriptions/#cantrbry)
+
+Below are the sizes of the compressed files, all sizes are in bytes.
+
+| File size | File description | LZW size | LWZ size % | Huff size | Huff size % |
+|-----------|------------------|----------|------------|-----------|-------------|
+| 4130      | Lorem ipsum      | 2514     | 61%        | 2284      | 55%         |
+| 16356     | Lorem ipsum      | 7004     | 43%        | 8886      | 54%         |
+| 65372     | Lorem ipsum      | 23570    | 36%        | 35217     | 54%         |
+| 152089    | alice29.txt      | 71754    | 47%        | 84640     | 56%         |
 
 ### Possible improvements
 
