@@ -4,6 +4,7 @@ import IO.InputReader;
 import IO.BitWriter;
 import IO.BinaryInputReader;
 import java.util.Scanner;
+import utils.CHashMap;
 
 public class Main {
 
@@ -11,13 +12,13 @@ public class Main {
         InputReader reader = new InputReader("test.txt");
         String str = reader.readLines();
         
-        /*
+        
         Huffman huff = new Huffman();
         String cStr = huff.compress(str);
         System.out.println("Compressed: " + cStr.substring(0, 50));
         String dStr = huff.decompress(cStr);
         System.out.println("Decompressed: " + dStr.subSequence(0, 50));
-        */
+        
         
         /*
         LZW lzw = new LZW();
@@ -27,7 +28,7 @@ public class Main {
         System.out.println("Decompressed (lzw): " + dStr.subSequence(0, 50));
         */
         
-        UI();
+        //UI();
     }
     
     public static void UI() {
