@@ -10,8 +10,8 @@ import utils.CHashMap;
  */
 public class Huffman {
     
-    private String[] mappingx;
-    private CHashMap demappingx;
+    private String[] mapping;
+    private CHashMap demapping;
     
     public Huffman() {
     }
@@ -23,7 +23,7 @@ public class Huffman {
      * @return Huffman coded string
      */
     public String compress(String str) {
-        mappingx = new String[256];
+        mapping = new String[256];
         int[] symbolArr = getCounts(str);
         CPriorityQueue queue = getQueue(symbolArr);
         Node root = buildTree(queue);
@@ -101,7 +101,7 @@ public class Huffman {
      */
     public void traverse(Node n, String i) {
         if (n.getLeft() == null && n.getRight() == null) {
-            mappingx[(int) n.getStr().charAt(0)] = i;
+            mapping[(int) n.getStr().charAt(0)] = i;
             return;
         }
         traverse(n.getLeft(), i + "0");
@@ -117,7 +117,7 @@ public class Huffman {
         // Convert the text
         String text = "";
         for (int i = 0; i < str.length(); i++) {
-            text += mappingx[(int) str.charAt(i)];
+            text += mapping[(int) str.charAt(i)];
         }
         
         // Convert the tree
@@ -170,7 +170,7 @@ public class Huffman {
      * @return Decompressed UTF-8 String.
      */
     public String decompress(String binStr) {
-        demappingx = new CHashMap();
+        demapping = new CHashMap();
         
         // Extract binary tree from data and build mapping
         String tree = getTree(binStr);
@@ -229,7 +229,7 @@ public class Huffman {
                 charBits += tree.charAt(i);
                 i++;
             }
-            demappingx.put(path, getByteValue(charBits));
+            demapping.put(path, getByteValue(charBits));
             return i;
         } else if (bin == '0') {
             i = buildMapping(tree, i, path + "0");
@@ -244,8 +244,8 @@ public class Huffman {
         
         for (int i = 0; i < binStr.length(); i++) {
             subStr += binStr.charAt(i);
-            if (demappingx.containsKey(subStr)) {
-                str += (char) demappingx.get(subStr);
+            if (demapping.containsKey(subStr)) {
+                str += (char) demapping.get(subStr);
                 subStr = "";
             }
         }
