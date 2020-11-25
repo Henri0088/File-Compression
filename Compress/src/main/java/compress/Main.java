@@ -4,7 +4,6 @@ import IO.InputReader;
 import IO.BitWriter;
 import IO.BinaryInputReader;
 import java.util.Scanner;
-import utils.CHashMap;
 
 public class Main {
 
@@ -13,20 +12,28 @@ public class Main {
         String str = reader.readLines();
         
         
+        System.out.println("--------------------------");
+        System.out.println("HUFFMAN");
+        System.out.println("--------------------------");
+        
         Huffman huff = new Huffman();
         String cStr = huff.compress(str);
         System.out.println("Compressed: " + cStr.substring(0, 50));
         String dStr = huff.decompress(cStr);
         System.out.println("Decompressed: " + dStr.subSequence(0, 50));
         
+        System.out.println("");
+        System.out.println("--------------------------");
+        System.out.println("Lempel-Ziv-Welch");
+        System.out.println("--------------------------");
         
-        /*
+        
         LZW lzw = new LZW();
-        String cStr = lzw.compress(str);
+        cStr = lzw.compress(str);
         System.out.println("Compressed (lzw): " + cStr.substring(0, 50));
-        String dStr = lzw.decompress(cStr);
+        dStr = lzw.decompress(cStr);
         System.out.println("Decompressed (lzw): " + dStr.subSequence(0, 50));
-        */
+        
         
         //UI();
     }
