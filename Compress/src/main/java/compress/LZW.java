@@ -1,7 +1,6 @@
 
 package compress;
 
-import java.util.HashMap;
 import utils.CHashMap;
 import static java.util.Objects.isNull;
 
@@ -11,18 +10,15 @@ import static java.util.Objects.isNull;
  */
 public class LZW {
     
-    private HashMap<String, Integer> mapping;
-    private CHashMap mappingx;
+    private CHashMap mapping;
     private String[] demapping;
     
     public LZW() {
-        this.mapping = new HashMap();
-        this.mappingx = new CHashMap();
+        this.mapping = new CHashMap();
         this.demapping = new String[4096];
         
         for (int i = 0; i <= 255; i++) {
-            //this.mapping.put(Character.toString((char) i), i);
-            this.mappingx.put(Character.toString((char) i), i);
+            this.mapping.put(Character.toString((char) i), i);
             this.demapping[i] = Character.toString((char) i);
         }
     }
@@ -39,14 +35,10 @@ public class LZW {
         String compStr = "";
         while (i <= str.length()) {
             
-            //if (!mapping.keySet().contains(str.substring(lastW, i))) {
-            if (!mappingx.containsKey(str.substring(lastW, i))) {
-                //compStr += getBinaryStr(mapping.get(str.substring(lastW, i - 1)));
-                compStr += getBinaryStr(mappingx.get(str.substring(lastW, i - 1)));
-                //if (mapping.size() < 4096) {
-                if (mappingx.size() < 4096) {
-                    //mapping.put(str.substring(lastW, i), mapping.size());
-                    mappingx.put(str.substring(lastW, i), mappingx.size());
+            if (!mapping.containsKey(str.substring(lastW, i))) {
+                compStr += getBinaryStr(mapping.get(str.substring(lastW, i - 1)));
+                if (mapping.size() < 4096) {
+                    mapping.put(str.substring(lastW, i), mapping.size());
                 }
                 lastW = i - 1;
             }

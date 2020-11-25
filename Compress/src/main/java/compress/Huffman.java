@@ -3,7 +3,6 @@ package compress;
 
 import utils.CPriorityQueue;
 import utils.CHashMap;
-import java.util.HashMap;
 
 /**
  * Class used to compress a UTF-8 coded String using Huffman coding.
@@ -13,7 +12,6 @@ public class Huffman {
     
     private String[] mappingx;
     private CHashMap demappingx;
-    private HashMap<String, Character> demapping;
     
     public Huffman() {
     }
@@ -160,7 +158,6 @@ public class Huffman {
             }
             str += bits;
         }
-        
         return str;
     }
     
@@ -173,7 +170,6 @@ public class Huffman {
      * @return Decompressed UTF-8 String.
      */
     public String decompress(String binStr) {
-        demapping = new HashMap<>();
         demappingx = new CHashMap();
         
         // Extract binary tree from data and build mapping
@@ -233,7 +229,6 @@ public class Huffman {
                 charBits += tree.charAt(i);
                 i++;
             }
-            //demapping.put(path, (char) getByteValue(charBits));
             demappingx.put(path, getByteValue(charBits));
             return i;
         } else if (bin == '0') {
@@ -249,9 +244,7 @@ public class Huffman {
         
         for (int i = 0; i < binStr.length(); i++) {
             subStr += binStr.charAt(i);
-            //if (demapping.keySet().contains(subStr)) {
             if (demappingx.containsKey(subStr)) {
-                //str += demapping.get(subStr);
                 str += (char) demappingx.get(subStr);
                 subStr = "";
             }
