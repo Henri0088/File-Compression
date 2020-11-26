@@ -102,7 +102,7 @@ public class LZW {
         String bin = "";
         int bits = 12;
         for (int i = bits - 1; i >= 0; i--) {
-            if (Math.pow(2,i) <= n) {
+            if (Math.pow(2, i) <= n) {
                 bin += "1";
                 n -= Math.pow(2, i);
             } else {

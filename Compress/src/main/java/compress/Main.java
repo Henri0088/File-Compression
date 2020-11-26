@@ -1,28 +1,36 @@
 package compress;
 
-import IO.InputReader;
-import IO.BitWriter;
-import IO.BinaryInputReader;
+import io.InputReader;
+import io.BitWriter;
+import io.BinaryInputReader;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        InputReader reader = new InputReader("alice29.txt");
+        InputReader reader = new InputReader("test.txt");
         String str = reader.readLines();
         
-        /**
+        /*
         System.out.println("--------------------------");
         System.out.println("HUFFMAN");
         System.out.println("--------------------------");
         
         Huffman huff = new Huffman();
-        String cStr = huff.compress(str);
-        System.out.println("Compressed: " + cStr.substring(0, 50));
+        
+        long start = System.nanoTime();
+        String cStr = huff.compressTimes(str);
+        long end = System.nanoTime();
+        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
+        
+        
+        start = System.nanoTime();
         String dStr = huff.decompress(cStr);
-        System.out.println("Decompressed: " + dStr.subSequence(0, 50));
+        end = System.nanoTime();
+        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
         */
         
+        /*
         System.out.println("");
         System.out.println("--------------------------");
         System.out.println("Lempel-Ziv-Welch");
@@ -30,8 +38,16 @@ public class Main {
         
         
         LZW lzw = new LZW();
+        long start = System.nanoTime();
         String cStr = lzw.compress(str);
+        long end = System.nanoTime();
+        
+        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
+        
+        start = System.nanoTime();
         String dStr = lzw.decompress(cStr);
+        end = System.nanoTime();
+        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
         
         if (str.equals(dStr)) {
             System.out.println("MATCH!");
@@ -40,13 +56,13 @@ public class Main {
             System.out.println("ORIGINAL: " + str.substring(0, 100));
             System.out.println("DECOMP: " + dStr.substring(0, 100));
         }
+        */
         
         
-        
-        //UI();
+        uI();
     }
     
-    public static void UI() {
+    public static void uI() {
         Scanner reader = new Scanner(System.in);
         System.out.println("Enter 1 (compress) or 2 (decompress) or anything else (exit): ");
         int c = Integer.valueOf(reader.nextLine());
@@ -97,22 +113,22 @@ public class Main {
             BinaryInputReader fileReader = new BinaryInputReader("HuffCompressed");
             String cStr = fileReader.readLines();
             Huffman huff = new Huffman();
-            String Str = huff.decompress(cStr);
+            String str = huff.decompress(cStr);
             BitWriter writer = new BitWriter("HuffDecompressed");
-            writer.writeBits(Str);
+            writer.writeBits(str);
             System.out.println("Decompression success, file 'HuffCompressed' created");
             System.out.println("First 30 characters:");
-            System.out.println(Str.substring(0, 30));
+            System.out.println(str.substring(0, 30));
         } else if (choice == 2) {
             BinaryInputReader fileReader = new BinaryInputReader("LZWCompressed");
             String cStr = fileReader.readLines();
             LZW lzw = new LZW();
-            String Str = lzw.decompress(cStr);
+            String str = lzw.decompress(cStr);
             BitWriter writer = new BitWriter("LZWDecompressed");
-            writer.writeBits(Str);
+            writer.writeBits(str);
             System.out.println("Decompression success, file 'LZWCompressed' created");
             System.out.println("First 30 characters:");
-            System.out.println(Str.substring(0, 30));
+            System.out.println(str.substring(0, 30));
         }
     }
     

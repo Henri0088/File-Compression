@@ -31,6 +31,36 @@ public class Huffman {
         return convert(str, root);
     }
     
+    public String compressTimes(String str) {
+        mapping = new String[256];
+        long start = System.nanoTime();
+        int[] symbolArr = getCounts(str);
+        long end = System.nanoTime();
+        System.out.println("symbolArr(): " + (end - start)/1000000 + " ms");
+        
+        start = System.nanoTime();
+        CPriorityQueue queue = getQueue(symbolArr);
+        end = System.nanoTime();
+        System.out.println("getQueue(): " + (end - start)/1000000 + " ms");
+        
+        start = System.nanoTime();
+        Node root = buildTree(queue);
+        end = System.nanoTime();
+        System.out.println("buildTree(): " + (end - start)/1000000 + " ms");
+        
+        
+        start = System.nanoTime();
+        traverse(root, "");
+        end = System.nanoTime();
+        System.out.println("traverse(): " + (end - start)/1000000 + " ms");
+        
+        start = System.nanoTime();
+        String cStr = convert(str, root);
+        end = System.nanoTime();
+        System.out.println("convert(): " + (end - start)/1000000 + " ms");
+        return cStr;
+    }
+    
     /**
      * Extract the counts of individual characters.
      * @param str UTF-8 encoded string
@@ -111,6 +141,7 @@ public class Huffman {
     /**
      * Compress the UTF-8 encoded String into binary.
      * @param str UTF-8 encoded String
+     * @param root root of the Huffman encoding tree
      * @return Binary coded String
      */
     public String convert(String str, Node root) {
