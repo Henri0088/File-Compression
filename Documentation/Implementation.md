@@ -15,6 +15,21 @@ impsum.." inside. The compressed data is written into either 'HuffCompressed' or
 
 ### Time- and spacecomplexity analysis
 
+#### Lempel-Ziv-Welch compression
+
+The LZW compression algorithm reads each character from the input string once. In the worst case each new character c concatenated to the previos ones
+form a new substring. In this case the substring without c is encoded. However the 'get' operation of CHashMap works in O(1) assuming that the internal hash function uniformly distributes keys. Also if the CHashMap is not full, a new entry is added. This is also a O(1) operation.
+
+So n characters are looped over and some O(1) operations are done to each of them. So the timecomplexity of the LZW compression is O(n).
+
+#### Lempel-Ziv-Welch decompression
+
+The LZW decompression works similarly to compression, it loops over the input string once and does some O(1) operations. So the timecomplexity of LZW decompression is also O(n)
+
+However in practice the decompression is faster than the compression algorithm. This is because while the compression algorithm uses a hashmap, the decompression algorithm uses a regular array for all its operations. This means that the decompression algorithm doesn't need to calculate hashes for example, resulting in smaller constant factors.
+
+### Huffman
+
 TODO
 
 ### Performance comparison
@@ -27,6 +42,14 @@ Below are the results of performance testing, all times are in ms.
 | 16356     | Lorem ipsum      | 81           | -              | 166           | -               |
 | 65372     | Lorem ipsum      | 312          | -              | 1310          | -               |
 | 152089    | alice29.txt      | 1826         | 424            | 5999          | 27437           |
+
+
+Below is the alice29.txt test again but with both algorithms using CHashMap instead of the default Java one.
+
+| File size | File description | LZW Compress | LZW Decompress | Huff Compress | Huff Decompress |
+|-----------|------------------|--------------|----------------|---------------|-----------------|
+| 152089    | alice29.txt      | 2442         | 455            | 5987          | 27425           |
+
 
 Lorem ipsum was generated [here](https://www.i-r-genius.com/lipsum.html)
 
