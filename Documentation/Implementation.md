@@ -28,7 +28,7 @@ The LZW decompression works similarly to compression, it loops over the input st
 
 However in practice the decompression is faster than the compression algorithm. This is because while the compression algorithm uses a hashmap, the decompression algorithm uses a regular array for all its operations. This means that the decompression algorithm doesn't need to calculate hashes for example, resulting in smaller constant factors.
 
-### Huffman
+#### Huffman
 
 TODO
 
