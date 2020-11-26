@@ -34,7 +34,6 @@ public class LZW {
         int lastW = 0;
         String compStr = "";
         while (i <= str.length()) {
-            
             if (!mapping.containsKey(str.substring(lastW, i))) {
                 compStr += getBinaryStr(mapping.get(str.substring(lastW, i - 1)));
                 if (mapping.size() < 4096) {
@@ -74,8 +73,9 @@ public class LZW {
             
             dStr += s;
             String chr = Character.toString(s.charAt(0));
-            demapping[nextCode] = demapping[binStrToInt(prevCode, 12)] + chr;
-            if (nextCode < 4095) {
+            
+            if (nextCode < 4096) {
+                demapping[nextCode] = demapping[binStrToInt(prevCode, 12)] + chr;
                 nextCode++;
             }
             prevCode = currCode;
@@ -111,5 +111,4 @@ public class LZW {
         }
         return bin;
     }
-    
 }

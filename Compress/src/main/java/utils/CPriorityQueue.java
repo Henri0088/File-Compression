@@ -2,7 +2,6 @@
 package utils;
 
 import compress.Node;
-import java.util.Arrays;
 
 /**
  * Custom data structure which mimics the behavior of

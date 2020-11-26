@@ -8,10 +8,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        InputReader reader = new InputReader("test.txt");
+        InputReader reader = new InputReader("alice29.txt");
         String str = reader.readLines();
         
-        
+        /**
         System.out.println("--------------------------");
         System.out.println("HUFFMAN");
         System.out.println("--------------------------");
@@ -21,6 +21,7 @@ public class Main {
         System.out.println("Compressed: " + cStr.substring(0, 50));
         String dStr = huff.decompress(cStr);
         System.out.println("Decompressed: " + dStr.subSequence(0, 50));
+        */
         
         System.out.println("");
         System.out.println("--------------------------");
@@ -29,10 +30,17 @@ public class Main {
         
         
         LZW lzw = new LZW();
-        cStr = lzw.compress(str);
-        System.out.println("Compressed (lzw): " + cStr.substring(0, 50));
-        dStr = lzw.decompress(cStr);
-        System.out.println("Decompressed (lzw): " + dStr.subSequence(0, 50));
+        String cStr = lzw.compress(str);
+        String dStr = lzw.decompress(cStr);
+        
+        if (str.equals(dStr)) {
+            System.out.println("MATCH!");
+        } else {
+            System.out.println("ERROR!");
+            System.out.println("ORIGINAL: " + str.substring(0, 100));
+            System.out.println("DECOMP: " + dStr.substring(0, 100));
+        }
+        
         
         
         //UI();

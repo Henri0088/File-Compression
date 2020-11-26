@@ -1,7 +1,10 @@
 
 package utils;
 
-
+/**
+ * Custom data structure which mimics the behavior of
+ * Java's HashMap<String, Integer>
+ */
 public class CHashMap {
     
     private Pair[] hashTable;
@@ -14,14 +17,16 @@ public class CHashMap {
         this.pointer = 0;
     }
     
+    /**
+     * Inserts a new key-value pair into the HashMap
+     * @param key String
+     * @param value Integer
+     */
     public void put(String key, int value) {
         int index = hashCode(key);
         
         keySet[pointer] = key;
         pointer++;
-        if (pointer == keySet.length) {
-            increaseKeySet();
-        }
         
         if (hashTable[index] == null) {
             hashTable[index] = new Pair(key, value);
@@ -32,6 +37,11 @@ public class CHashMap {
         }
     }
     
+    /**
+     * Returns integer associated with the key
+     * @param key String
+     * @return Integer value corresponding to key
+     */
     public int get(String key) {
         int index = hashCode(key);
         
@@ -45,6 +55,12 @@ public class CHashMap {
         }
     }
     
+    /**
+     * Returns true if key is present in the HashMap,
+     * false if not.
+     * @param key to look up.
+     * @return true/false
+     */
     public boolean containsKey(String key) {
         for (int i = 0; i < pointer; i++) {
             if (keySet[i].equals(key)) {
@@ -54,14 +70,19 @@ public class CHashMap {
         return false;
     }
     
+    /**
+     * Returns the amount of key-value pairs in the HashMap.
+     * @return int
+     */
     public int size() {
         return pointer;
     }
     
     private void increaseKeySet() {
+        System.out.println("INCREASING SIZE!");
         int newSize = keySet.length + 2048;
         String[] newSet = new String[newSize];
-        System.arraycopy(keySet, 0, newSet, 0, keySet.length - 1);
+        System.arraycopy(keySet, 0, newSet, 0, keySet.length);
         keySet = newSet;
     }
     
