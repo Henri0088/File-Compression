@@ -13,6 +13,7 @@
 * #### [Weekly report 2](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Week2.md)
 * #### [Weekly report 3](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Week3.md)
 * #### [Weekly report 4](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Week4.md)
+* #### [Weekly report 5](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Week5.md)
 
 ## Other
 All commands should be ran in the "Compress" directory.
