@@ -7,10 +7,6 @@ Both classes have compress and decompress methods which do exactly what the name
 a String, which only has 1's and 0's. A separate BitWriter class is used to write this String into a file bit by bit instead of 
 UTF-8 encoding each 1 and 0.
 
-At the moment the program has a very barebones UI which allows the user to compress any file they want. The compressed data is written into either 'HuffCompressed' or 'LZWCompressed' depending on the algorithm chosen.
-
-'HuffCompressed' and 'LZWCompressed' can also be decompressed back to 'HuffDecompressed' and 'LZWDecompressed' respectively.
-
 ### Time- and spacecomplexity analysis
 
 #### Lempel-Ziv-Welch compression
