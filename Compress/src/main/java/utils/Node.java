@@ -1,5 +1,5 @@
 
-package compress;
+package utils;
 
 /**
  * Class which is used while constructing and traversing

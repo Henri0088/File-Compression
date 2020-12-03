@@ -1,5 +1,5 @@
 
-import compress.Node;
+import utils.Node;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;

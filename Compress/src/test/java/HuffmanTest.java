@@ -1,7 +1,7 @@
 
 import compress.Huffman;
 import io.InputReader;
-import compress.Node;
+import utils.Node;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class HuffmanTest {
     @Before
     public void setUpClass() {
         huffman = new Huffman();
-        reader = new InputReader("test.txt");
+        reader = new InputReader("alice29.txt");
     }
     
     @Test

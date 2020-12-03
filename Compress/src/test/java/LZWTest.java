@@ -14,7 +14,7 @@ public class LZWTest {
     @Before
     public void setUpClass() {
         lzw = new LZW();
-        reader = new InputReader("test.txt");
+        reader = new InputReader("alice29.txt");
     }
     
     @Test
