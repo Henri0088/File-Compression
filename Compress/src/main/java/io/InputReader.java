@@ -10,13 +10,8 @@ public class InputReader {
     
     private BufferedReader reader;
     
-    public InputReader(String file) { 
-        try {
-            this.reader = new BufferedReader(new FileReader(file));
-        } catch (Exception e) { // Better exception type?
-            System.out.println("Is the filename correct?");
-            System.out.println("Exception in InputReader " + e);
-        }
+    public InputReader(String file) throws Exception { 
+        this.reader = new BufferedReader(new FileReader(file));
     }
     
     /**
@@ -32,7 +27,6 @@ public class InputReader {
             }
         } catch (Exception e) {
             System.out.println("Error occurred while reading lines from file");
-            System.out.println("Exception in InputReader " + e);
         }
         return str.toString();
     }

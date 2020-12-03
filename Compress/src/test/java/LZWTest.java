@@ -14,7 +14,11 @@ public class LZWTest {
     @Before
     public void setUpClass() {
         lzw = new LZW();
-        reader = new InputReader("alice29.txt");
+        try {
+            reader = new InputReader("alice29.txt");
+        } catch (Exception e) {
+            System.out.println("reading failed.");
+        }
     }
     
     @Test

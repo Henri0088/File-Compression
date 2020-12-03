@@ -35,6 +35,7 @@ public class BitWriter {
                 bits.set(i);
             }
         }
+        
         byte[] byteArr = bits.toByteArray();
         
         // toByteArray flips bytes around? 
@@ -46,7 +47,7 @@ public class BitWriter {
             fos.write(byteArr);
             fos.close();
         } catch (Exception e) { // Better exception type?
-            System.out.println("Writing failed! " + e);
+            System.out.println("Writing failed!");
         }
     }
     

@@ -16,7 +16,11 @@ public class HuffmanTest {
     @Before
     public void setUpClass() {
         huffman = new Huffman();
-        reader = new InputReader("alice29.txt");
+        try {
+            reader = new InputReader("alice29.txt");
+        } catch (Exception e) {
+            System.out.println("reading failed.");
+        }
     }
     
     @Test

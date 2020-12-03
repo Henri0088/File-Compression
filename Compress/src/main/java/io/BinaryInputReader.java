@@ -22,7 +22,7 @@ public class BinaryInputReader {
             }
             return str;
         } catch (Exception e) {
-            System.out.println("Exception in BinaryInputReader " + e);
+            System.out.println("No file found!");
         }
         return "";
     }
