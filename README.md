@@ -6,6 +6,7 @@
 ### [Output file format](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Output.md)
 ### [Implementation document (Toteutusdokumentti)](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Implementation.md)
 ### [Testing document](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Testing.md)
+### [Manual](https://github.com/Henri0088/File-Compression/blob/main/Documentation/manual.md)
 
 ## Weekly reports
 
