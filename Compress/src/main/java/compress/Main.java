@@ -1,17 +1,13 @@
 package compress;
 
 import io.InputReader;
-import io.BitWriter;
-import io.BinaryInputReader;
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        InputReader reader = new InputReader("test.txt");
+        InputReader reader = new InputReader("bible.txt");
         String str = reader.readLines();
         
-        /*
         System.out.println("--------------------------");
         System.out.println("HUFFMAN");
         System.out.println("--------------------------");
@@ -19,7 +15,7 @@ public class Main {
         Huffman huff = new Huffman();
         
         long start = System.nanoTime();
-        String cStr = huff.compressTimes(str);
+        String cStr = huff.compress(str);
         long end = System.nanoTime();
         System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
         
@@ -28,26 +24,8 @@ public class Main {
         String dStr = huff.decompress(cStr);
         end = System.nanoTime();
         System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
-        */
         
-        /*
-        System.out.println("");
-        System.out.println("--------------------------");
-        System.out.println("Lempel-Ziv-Welch");
-        System.out.println("--------------------------");
-        
-        
-        LZW lzw = new LZW();
-        long start = System.nanoTime();
-        String cStr = lzw.compress(str);
-        long end = System.nanoTime();
-        
-        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
-        
-        start = System.nanoTime();
-        String dStr = lzw.decompress(cStr);
-        end = System.nanoTime();
-        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
+        System.out.println("Size: " + str.length() + " compressed: " + cStr.length()/8);
         
         if (str.equals(dStr)) {
             System.out.println("MATCH!");
@@ -56,80 +34,33 @@ public class Main {
             System.out.println("ORIGINAL: " + str.substring(0, 100));
             System.out.println("DECOMP: " + dStr.substring(0, 100));
         }
-        */
+        
+        System.out.println("");
+        System.out.println("--------------------------");
+        System.out.println("Lempel-Ziv-Welch");
+        System.out.println("--------------------------");
         
         
-        uI();
-    }
-    
-    public static void uI() {
-        Scanner reader = new Scanner(System.in);
-        System.out.println("Enter 1 (compress) or 2 (decompress) or anything else (exit): ");
-        int c = Integer.valueOf(reader.nextLine());
-        switch (c) {
-            case 1:
-                compressUI(reader);
-                break;
-            case 2:
-                decompressUI(reader);
-                break;
+        LZW lzw = new LZW();
+        start = System.nanoTime();
+        cStr = lzw.compress(str);
+        end = System.nanoTime();
+        
+        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
+        
+        start = System.nanoTime();
+        dStr = lzw.decompress(cStr);
+        end = System.nanoTime();
+        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
+        
+        System.out.println("Size: " + str.length() + " compressed: " + cStr.length()/8);
+        
+        if (str.equals(dStr)) {
+            System.out.println("MATCH!");
+        } else {
+            System.out.println("ERROR!");
+            System.out.println("ORIGINAL: " + str.substring(0, 100));
+            System.out.println("DECOMP: " + dStr.substring(0, 100));
         }
     }
-    
-    public static void compressUI(Scanner reader) {
-        System.out.println("Please enter source file \n(or '1' to use default file test.txt): ");
-        String file = reader.nextLine();
-        
-        if (file.equals("1")) {
-            file = "test.txt";
-        }
-        
-        InputReader fileReader = new InputReader(file);
-        
-        System.out.println("Compress using: Huffman (1) or LZW (2)? (Enter 1 or 2)");
-        int choice = Integer.valueOf(reader.nextLine());
-        
-        String str = fileReader.readLines();
-        if (choice == 1) {
-            Huffman huff = new Huffman();
-            String cStr = huff.compress(str);
-            BitWriter writer = new BitWriter("HuffCompressed");
-            writer.writeBits(cStr);
-            System.out.println("Compression success, file 'HuffCompressed' created.");
-        } else if (choice == 2) {
-            LZW lzw = new LZW();
-            String cStr = lzw.compress(str);
-            BitWriter writer = new BitWriter("LZWCompressed");
-            writer.writeBits(cStr);
-            System.out.println("Compression success, file 'LZWCompressed' created.");
-        }
-    }
-    
-    public static void decompressUI(Scanner reader) {
-        System.out.println("Decompress 'HuffCompressed' (1) or 'LZWCompressed' (2)?");
-        int choice = Integer.valueOf(reader.nextLine());
-        
-        if (choice == 1) {
-            BinaryInputReader fileReader = new BinaryInputReader("HuffCompressed");
-            String cStr = fileReader.readLines();
-            Huffman huff = new Huffman();
-            String str = huff.decompress(cStr);
-            BitWriter writer = new BitWriter("HuffDecompressed");
-            writer.writeBits(str);
-            System.out.println("Decompression success, file 'HuffCompressed' created");
-            System.out.println("First 30 characters:");
-            System.out.println(str.substring(0, 30));
-        } else if (choice == 2) {
-            BinaryInputReader fileReader = new BinaryInputReader("LZWCompressed");
-            String cStr = fileReader.readLines();
-            LZW lzw = new LZW();
-            String str = lzw.decompress(cStr);
-            BitWriter writer = new BitWriter("LZWDecompressed");
-            writer.writeBits(str);
-            System.out.println("Decompression success, file 'LZWCompressed' created");
-            System.out.println("First 30 characters:");
-            System.out.println(str.substring(0, 30));
-        }
-    }
-    
 }

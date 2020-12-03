@@ -1,8 +1,6 @@
 
 package utils;
 
-import compress.Node;
-
 /**
  * Custom data structure which mimics the behavior of
  * Java's PriorityQueue (Node);
