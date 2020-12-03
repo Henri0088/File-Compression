@@ -1,3 +1,5 @@
 /Compress/.gradle/
 /Compress/build/
 /Compress/testOutput.bin
+.lzw
+.huf
