@@ -1,6 +1,7 @@
 
 package compress;
 
+import utils.Node;
 import utils.CPriorityQueue;
 import utils.CHashMap;
 
@@ -27,38 +28,8 @@ public class Huffman {
         int[] symbolArr = getCounts(str);
         CPriorityQueue queue = getQueue(symbolArr);
         Node root = buildTree(queue);
-        traverse(root, "");
+        getCodes(root, "");
         return convert(str, root);
-    }
-    
-    public String compressTimes(String str) {
-        mapping = new String[256];
-        long start = System.nanoTime();
-        int[] symbolArr = getCounts(str);
-        long end = System.nanoTime();
-        System.out.println("symbolArr(): " + (end - start)/1000000 + " ms");
-        
-        start = System.nanoTime();
-        CPriorityQueue queue = getQueue(symbolArr);
-        end = System.nanoTime();
-        System.out.println("getQueue(): " + (end - start)/1000000 + " ms");
-        
-        start = System.nanoTime();
-        Node root = buildTree(queue);
-        end = System.nanoTime();
-        System.out.println("buildTree(): " + (end - start)/1000000 + " ms");
-        
-        
-        start = System.nanoTime();
-        traverse(root, "");
-        end = System.nanoTime();
-        System.out.println("traverse(): " + (end - start)/1000000 + " ms");
-        
-        start = System.nanoTime();
-        String cStr = convert(str, root);
-        end = System.nanoTime();
-        System.out.println("convert(): " + (end - start)/1000000 + " ms");
-        return cStr;
     }
     
     /**
@@ -101,7 +72,9 @@ public class Huffman {
      * @return Root Node of the binary tree
      */
     public Node buildTree(CPriorityQueue queue) {
+        int r = 0;
         while (!queue.isEmpty()) {
+            r++;
             Node n1 = queue.poll();
             Node n2 = queue.poll();
             
@@ -129,13 +102,13 @@ public class Huffman {
      * @param n Node to check next (First call should be to the root Node)
      * @param i The current binary code of Node n (First call should be a empty String)
      */
-    public void traverse(Node n, String i) {
+    public void getCodes(Node n, String i) {
         if (n.getLeft() == null && n.getRight() == null) {
             mapping[(int) n.getStr().charAt(0)] = i;
             return;
         }
-        traverse(n.getLeft(), i + "0");
-        traverse(n.getRight(), i + "1");
+        getCodes(n.getLeft(), i + "0");
+        getCodes(n.getRight(), i + "1");
     }
     
     /**
@@ -145,23 +118,18 @@ public class Huffman {
      * @return Binary coded String
      */
     public String convert(String str, Node root) {
+        StringBuilder builder = new StringBuilder();
         // Convert the text
-        String text = "";
         for (int i = 0; i < str.length(); i++) {
-            text += mapping[(int) str.charAt(i)];
+            builder.append(mapping[(int) str.charAt(i)]);
         }
+        String text = builder.toString();
         
         // Convert the tree
         String tree = convertTree(root, "");
         
-        // Generate 9-bit separator
-        String separator = "";
-        for (int i = 1; i <= 9; i++) {
-            separator += "1";
-        }
-        
         // Concatenate tree -> separator -> text
-        String compressedStr = tree + separator + text;
+        String compressedStr = tree + "111111111" + text;
         
         return compressedStr;
     }
@@ -210,17 +178,7 @@ public class Huffman {
         // Jump over tree and 9-bit separator
         int i = tree.length() + 9;
         
-        // i is now pointing to the first bit of data
-        // Extract rest of the data
-        String str = "";
-        for (int d = i; d < binStr.length(); d++) {
-            str += binStr.charAt(d);
-        }
-        
-        // Convert binary to UTF-8
-        str = mapBinaryStr(str);
-        
-        return str;
+        return mapBinaryStr(binStr.substring(i));
     }
     
     private String getTree(String binStr) {
@@ -272,15 +230,16 @@ public class Huffman {
     private String mapBinaryStr(String binStr) {
         String str = "";
         String subStr = "";
+        StringBuilder builder = new StringBuilder();
         
         for (int i = 0; i < binStr.length(); i++) {
             subStr += binStr.charAt(i);
             if (demapping.containsKey(subStr)) {
-                str += (char) demapping.get(subStr);
+                builder.append((char) demapping.get(subStr));
                 subStr = "";
             }
         }
-        return str;
+        return builder.toString();
     }
     
     private int getByteValue(String str) {

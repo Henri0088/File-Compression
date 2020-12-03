@@ -2,7 +2,6 @@
 package compress;
 
 import utils.CHashMap;
-import static java.util.Objects.isNull;
 
 /**
  * Class used to compress a UTF-8 coded String using Lempel-Ziv-Welch.
@@ -32,10 +31,10 @@ public class LZW {
         str += "#";
         int i = 1;
         int lastW = 0;
-        String compStr = "";
+        StringBuilder builder = new StringBuilder();
         while (i <= str.length()) {
             if (!mapping.containsKey(str.substring(lastW, i))) {
-                compStr += getBinaryStr(mapping.get(str.substring(lastW, i - 1)));
+                builder.append(getBinaryStr(mapping.get(str.substring(lastW, i - 1))));
                 if (mapping.size() < 4096) {
                     mapping.put(str.substring(lastW, i), mapping.size());
                 }
@@ -43,7 +42,7 @@ public class LZW {
             }
             i++;
         }
-        return compStr;
+        return builder.toString();
     }
     
     /**
@@ -56,22 +55,22 @@ public class LZW {
     public String decompress(String str) {
         str += "#";
         int nextCode = 256;
-        String dStr = "";
+        StringBuilder builder = new StringBuilder();
         
         String prevCode = str.substring(0, 12);
-        dStr += demapping[binStrToInt(prevCode, 12)];
+        builder.append(demapping[binStrToInt(prevCode, 12)]);
         
         int i = 12;
         while (str.length() > i + 12) {
             String currCode = str.substring(i, i + 12);
             String s = demapping[binStrToInt(currCode, 12)];
             
-            if (isNull(s)) {
+            if (s == null) {
                 String prev = demapping[binStrToInt(prevCode, 12)];
                 s = prev + Character.toString(prev.charAt(0));
             }
             
-            dStr += s;
+            builder.append(s);
             String chr = Character.toString(s.charAt(0));
             
             if (nextCode < 4096) {
@@ -82,7 +81,7 @@ public class LZW {
             i = i + 12;
         }
         
-        return dStr;
+        return builder.toString();
     }
     
     private int binStrToInt(String str, int codeLength) {
