@@ -62,12 +62,22 @@ public class CHashMap {
      * @return true/false
      */
     public boolean containsKey(String key) {
-        for (int i = 0; i < pointer; i++) {
-            if (keySet[i].equals(key)) {
-                return true;
-            }
+        int index = hashCode(key);
+        
+        if (hashTable[index] == null) {
+            return false;
         }
-        return false;
+        
+        Pair currPair = hashTable[index];
+        while (true) {
+            if (currPair.getKey().equals(key)) {
+                return true;
+            } else if (currPair.getNext() == null) {
+                return false;
+            }
+            currPair = currPair.getNext();
+        }
+        
     }
     
     /**
@@ -76,14 +86,6 @@ public class CHashMap {
      */
     public int size() {
         return pointer;
-    }
-    
-    private void increaseKeySet() {
-        System.out.println("INCREASING SIZE!");
-        int newSize = keySet.length + 2048;
-        String[] newSet = new String[newSize];
-        System.arraycopy(keySet, 0, newSet, 0, keySet.length);
-        keySet = newSet;
     }
     
     /**
