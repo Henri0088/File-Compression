@@ -44,7 +44,9 @@ All of these methods are called one after another making the time complexity of 
 
 #### Huffman decompression
 
-TODO
+Similarly to compression, the decompression algorithm runs through a couple of methods which first decode the binary tree and then extract binary codes from the tree which do not depend on the length of the initial data. Lastly the data is decompressed by looping over the string once, making the decompression also work in O(n)
+
+In practice the decompression is much slower than the compression. This is because while it mostly does the same operations in reverse as the compression, the length of the string processed is actually longer since the compressed string only contains 1's and 0's. Furthermore while compression uses a normal array for Integer -> String mapping while the decompression needs String -> Integer mapping and uses CHashMap. 
 
 ### Performance comparison
 
@@ -84,6 +86,8 @@ LZW seems to be the better algorithm, in terms of decompressing at least. The co
 ### Possible improvements
 
 The hashfunction used by the CHashMap class is generating too many collisions and should be improved.
+
+Since the "strings" in the huffman decompression String -> Integer mapping are actually binary strings a normal array of size 256 could be used to help performance, this will most likely be implemented before the final deadline.
 
 A caveat regarding decompressing with the Huffman class is discussed [here](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Output.md)
 
