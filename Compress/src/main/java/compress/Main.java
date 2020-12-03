@@ -1,11 +1,17 @@
 package compress;
 
 import io.InputReader;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        InputReader reader = new InputReader("bible.txt");
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Give file to compress:");
+        String file = scanner.nextLine();
+        
+        InputReader reader = new InputReader(file);
         String str = reader.readLines();
         
         System.out.println("--------------------------");
@@ -18,7 +24,6 @@ public class Main {
         String cStr = huff.compress(str);
         long end = System.nanoTime();
         System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
-        
         
         start = System.nanoTime();
         String dStr = huff.decompress(cStr);
@@ -39,7 +44,6 @@ public class Main {
         System.out.println("--------------------------");
         System.out.println("Lempel-Ziv-Welch");
         System.out.println("--------------------------");
-        
         
         LZW lzw = new LZW();
         start = System.nanoTime();
