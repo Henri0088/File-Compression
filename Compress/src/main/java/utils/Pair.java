@@ -1,6 +1,10 @@
 
 package utils;
 
+/**
+ * Simple key-value pair used by the CHashMap class.
+ * @author henri
+ */
 public class Pair {
     
     private String key;
