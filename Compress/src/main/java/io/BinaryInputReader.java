@@ -15,12 +15,12 @@ public class BinaryInputReader {
     public String readLines() {
         try {
             byte[] byteArr = Files.readAllBytes(Paths.get(filePath));
+            StringBuilder str = new StringBuilder();
             
-            String str = "";
             for (byte byt : byteArr) {
-                str += Integer.toBinaryString((byt & 0xFF) + 0x100).substring(1);
+                str.append(Integer.toBinaryString((byt & 0xFF) + 0x100).substring(1));
             }
-            return str;
+            return str.toString();
         } catch (Exception e) {
             System.out.println("No file found!");
         }

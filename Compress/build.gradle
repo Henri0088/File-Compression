@@ -26,6 +26,12 @@ jacocoTestReport {
     }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'compress.Main'
+    }
+}
+
 check.dependsOn jacocoTestReport
 
 run {
