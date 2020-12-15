@@ -59,6 +59,7 @@ Below are the results of performance testing, all times are in ms, file size in 
 | 368911    | Alphabet repeated| 578          | 5              | 64            | 199             |
 | 2408281   | world192.txt     | 749          | 71             | 117           | 1094            |
 | 4351186   | bible.txt        | 1211         | 85             | 163           | 1645            |
+| 51000000  | bigfile          | 51036        | 89             | 868           | 13968           |
 
 For comparison, here is one of the tests but with LZW using the default JAVA HashMap instead of CHashMap
 
@@ -76,12 +77,17 @@ Below are the sizes of the compressed files, all sizes are in bytes.
 | 368911    | Alphabet repeated| 8607     | 2.3%       | 221904    | 60.1%       |
 | 2408281   | world192.txt     | 1558776  | 64.7%      | 1504199   | 62.5%       |
 | 4351186   | bible.txt        | 2104450  | 48.4%      | 2492113   | 57.3%       |
+| 51000000  | bigfile          | 1002850  | 2.0%       | 24125022  | 47.3%       |
 
 
 .txt files from [here](https://corpus.canterbury.ac.nz/descriptions/#cantrbry)
 
-LZW seems to be the better algorithm, in terms of decompressing at least. The compression part is more complex, LZW is being hindered by my CHashMap. My hashfunction uses polynomial hashing, however it still generates a lot of collisions slowening the data  structure down, this will hopefully be bettered later on.
+bigfile was generated using the unix-command
+```
+yes "tobeornottobe, an interesting question indeed....." | head -n 1000000 > bigfile.txt
+```
 
+LZW seems to be the better algorithm, in terms of decompressing at least. The compression part is more complex, LZW is being hindered by my CHashMap. My hashfunction uses polynomial hashing, however it still generates a lot of collisions slowening the data  structure down.
 
 ### Possible improvements
 
