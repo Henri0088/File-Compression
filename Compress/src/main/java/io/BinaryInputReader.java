@@ -4,6 +4,11 @@ package io;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Class for reading compressed data from a file,
+ * bytes don't need to be valid UTF-8 characters
+ * @author henri
+ */
 public class BinaryInputReader {
     
     private String filePath;

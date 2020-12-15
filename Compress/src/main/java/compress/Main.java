@@ -28,6 +28,10 @@ public class Main {
         }
     }
     
+    /**
+     * Method which 1. reads a file, 2. calls the appropriate decompression algorithm
+     * and 3. writes the decompressed data into a file
+     */
     public static void decompress() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give filename: ");
@@ -59,6 +63,10 @@ public class Main {
         
     }
     
+    /**
+     * Method which 1. reads a file, 2. calls a compression algorithm and
+     * 3. writes compressed data into a file
+     */
     public static void compress() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose one: \n(1): Huffman \n(2): LZW");
@@ -91,6 +99,10 @@ public class Main {
         }
     }
     
+    /**
+     * Compresses/decompresses the contents file without actually outputting a file.
+     * Uses both algorithms and reports times.
+     */
     public static void performance() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give file to run performance tests for:");
@@ -114,14 +126,14 @@ public class Main {
         long start = System.nanoTime();
         String cStr = huff.compress(str);
         long end = System.nanoTime();
-        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
+        System.out.println("COMPRESS: " + (end - start) / 1000000 + " ms");
         
         start = System.nanoTime();
         String dStr = huff.decompress(cStr);
         end = System.nanoTime();
-        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
+        System.out.println("DECOMPRESS: " + (end - start) / 1000000 + " ms");
         
-        System.out.println("Size: " + str.length() + " compressed: " + cStr.length()/8);
+        System.out.println("Size: " + str.length() + " compressed: " + cStr.length() / 8);
         
         if (str.equals(dStr)) {
             System.out.println("MATCH!");
@@ -141,14 +153,14 @@ public class Main {
         cStr = lzw.compress(str);
         end = System.nanoTime();
         
-        System.out.println("COMPRESS: " + (end - start)/1000000 + " ms");
+        System.out.println("COMPRESS: " + (end - start) / 1000000 + " ms");
         
         start = System.nanoTime();
         dStr = lzw.decompress(cStr);
         end = System.nanoTime();
-        System.out.println("DECOMPRESS: " + (end - start)/1000000 + " ms");
+        System.out.println("DECOMPRESS: " + (end - start) / 1000000 + " ms");
         
-        System.out.println("Size: " + str.length() + " compressed: " + cStr.length()/8);
+        System.out.println("Size: " + str.length() + " compressed: " + cStr.length() / 8);
         
         if (str.equals(dStr)) {
             System.out.println("MATCH!");

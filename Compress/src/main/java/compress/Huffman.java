@@ -149,7 +149,7 @@ public class Huffman {
         // Followed by 8 bits corresponding to the UTF-8 character
         String bits = Integer.toBinaryString(n.getStr().charAt(0));
         
-        // Add 0's to front to make 8 bits long if needed.
+        // Add 0's to front to make character code 8 bits long if needed.
         if (bits.length() < 8) {
             int zeroAdd = 8 - bits.length();
             for (int i = 1; i <= zeroAdd; i++) {
@@ -228,7 +228,6 @@ public class Huffman {
     }
     
     private String mapBinaryStr(String binStr) {
-        String str = "";
         String subStr = "";
         StringBuilder builder = new StringBuilder();
         

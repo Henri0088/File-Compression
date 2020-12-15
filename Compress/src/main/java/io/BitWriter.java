@@ -38,7 +38,7 @@ public class BitWriter {
         
         byte[] byteArr = bits.toByteArray();
         
-        // toByteArray flips bytes around? 
+        // flip bytes around
         for (int i = 0; i < byteArr.length; i++) {
             byteArr[i] = reverse(byteArr[i]);
         }
