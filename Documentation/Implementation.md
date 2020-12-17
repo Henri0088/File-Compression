@@ -11,7 +11,7 @@ UTF-8 encoding each 1 and 0.
 
 #### Lempel-Ziv-Welch compression
 
-The LZW compression algorithm reads each character from the input string once. In the worst case each new character c concatenated to the previos ones
+The LZW compression algorithm reads each character from the input string once. In the worst case each new character c concatenated to the previous ones
 form a new substring. In this case the substring without c is encoded. However the 'get' operation of CHashMap works in O(1) assuming that the internal hash function uniformly distributes keys. Also if the CHashMap is not full, a new entry is added. This is also a O(1) operation.
 
 So n characters are looped over and some O(1) operations are done to each of them. So the timecomplexity of the LZW compression is O(n).
@@ -91,9 +91,7 @@ LZW seems to be the better algorithm, in terms of decompressing at least. The co
 
 ### Possible improvements
 
-The hashfunction used by the CHashMap class is generating too many collisions and should be improved.
-
-Since the "strings" in the huffman decompression String -> Integer mapping are actually binary strings a normal array of size 256 could be used to help performance, this will most likely be implemented before the final deadline.
+Since the "strings" in the huffman decompression String -> Integer mapping are actually binary strings a normal array of size 256 could be used to help performance.
 
 A caveat regarding decompressing with the Huffman class is discussed [here](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Output.md)
 
