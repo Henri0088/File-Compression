@@ -89,18 +89,15 @@ public class CHashMap {
     }
     
     /**
-     * Uses polynomial hashing with A = 7. Also rolls back to 0 if 2^32 - 1 is reached.
+     * Calculates hash code for string str.
      * @param str
      * @return 
      */
     private int hashCode(String str) {
-        int hash = 0;
+        int hash = 7;
         for (int i = 0; i < str.length(); i++) {
-            hash += Math.pow(7, str.length() - i) * (int) str.charAt(i);
-            if (hash == Integer.MAX_VALUE) {
-                hash = 0;
-            }
+            hash = hash*31 + str.charAt(i);
         }
-        return hash % 4096;
+        return hash % 4096 > 0 ? hash % 4096 : -hash % 4096;
     }
 }
