@@ -16,5 +16,5 @@ The report can be found at Compress/build/reports/jacoco/test/html/index.html
 
 Both LZW and Huffman have been tested with some inputs, the results are shown [here](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Implementation.md#performance-comparison)
 
-These tests can be verified by running the program with ./gradlew run, choosing "Performance test" and giving the file name. Make sure that the files are located in the Compress folder.
+The validity of the compression/decompression process can be tested by running the program with java -jar compress.jar, choosing "Performance test" and giving the file name. Make sure that the files are located in the same folder with compress.jar.
 The program checks during runtime that the contents of the file have been compressed and decompressed back with no data lost.

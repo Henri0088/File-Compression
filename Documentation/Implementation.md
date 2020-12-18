@@ -50,32 +50,26 @@ In practice the decompression is much slower than the compression. This is becau
 
 ### Performance comparison
 
-Below are the results of performance testing, all times are in ms, file size in bytes.
+Below are the results of performance testing, all times are in ms, sizes reflect the string size in bytes as seen by Java,
+which in case of uncompressed UTF-8 data is the same as its length.
+In case of compressed data which is presented as a String of 1's and 0's the length is divided by 8.
 
-| File size | File description | LZW Compress | LZW Decompress | Huff Compress | Huff Decompress |
+
+| Size      | File description | LZW Compress | LZW Decompress | Huff Compress | Huff Decompress |
 |-----------|------------------|--------------|----------------|---------------|-----------------|
-| 152089    | alice29.txt      | 68           | 15             | 63            | 109             |
-| 368900    | 'A' repeated     | 1706         | 4              | 68            | 74              |
-| 368911    | Alphabet repeated| 578          | 5              | 64            | 199             |
-| 2408281   | world192.txt     | 749          | 71             | 117           | 1094            |
-| 4351186   | bible.txt        | 1211         | 85             | 163           | 1645            |
-| 51000000  | bigfile          | 51036        | 89             | 868           | 13968           |
-
-For comparison, here is one of the tests but with LZW using the default JAVA HashMap instead of CHashMap
-
-| File size | File description | LZW Compress | LZW Decompress | 
-|-----------|------------------|--------------|----------------|
-| 368911    | Alphabet repeated| 62           | 5              | 
-| 4351186   | bible.txt        | 839          | 87             |
+| 148482    | alice29.txt      | 64           | 15             | 56            | 77              |
+| 1227437   | 'A' repeated     | 1207         | 4              | 77            | 87              |
+| 2241792   | Alphabet repeated| 459          | 7              | 103           | 288             |
+| 4351186   | bible.txt        | 888          | 155            | 156           | 490             |
+| 51000000  | bigfile          | 6377         | 93             | 888           | 4135            |
 
 Below are the sizes of the compressed files, all sizes are in bytes.
 
-| File size | File description | LZW size | LWZ size % | Huff size | Huff size % |
+| Size      | File description | LZW size | LWZ size % | Huff size | Huff size % |
 |-----------|------------------|----------|------------|-----------|-------------|
-| 152089    | alice29.txt      | 71754    | 47.2%      | 84639     | 55.7%       |
-| 368900    | 'A' repeated     | 3760     | 1.0%       | 46116     | 12.5%       |
-| 368911    | Alphabet repeated| 8607     | 2.3%       | 221904    | 60.1%       |
-| 2408281   | world192.txt     | 1558776  | 64.7%      | 1504199   | 62.5%       |
+| 148482    | alice29.txt      | 71754    | 48.3%      | 84639     | 57.0%       |
+| 1227437   | 'A' repeated     | 2354     | 0.2%       | 153434    | 12.5%       |
+| 2241792   | Alphabet repeated| 26071    | 1.2%       | 1349026   | 60.2%       |
 | 4351186   | bible.txt        | 2104450  | 48.4%      | 2492113   | 57.3%       |
 | 51000000  | bigfile          | 1002850  | 2.0%       | 24125022  | 47.3%       |
 
@@ -87,7 +81,11 @@ bigfile was generated using the unix-command
 yes "tobeornottobe, an interesting question indeed....." | head -n 1000000 > bigfile.txt
 ```
 
-LZW seems to be the better algorithm, in terms of decompressing at least. The compression part is more complex, LZW is being hindered by my CHashMap. My hashfunction uses polynomial hashing, however it still generates a lot of collisions slowening the data  structure down.
+Below you can see how the different algorithms scale. Data used was world192.txt concatenated with itself, so world192.txt twice. Vertical axis is time in ms and horizontal axis is amount of characters used in the compression process.
+
+![results](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Algorithm%20comparison.png)
+
+The algorithms seem to scale linearly as expected. Overall huffman seems to be the quicker of the two. However generally LZW achieves a better compression ratio with data containing natural language. LZW can also achieve very good compression rates if the data is repetitive enough. Lastly, I did change my hash function used by my CHashMap which helped LZW catch up to huffman, however I still think some collisions are happening which perhaps slows down LZW because it uses this data structure more than huffman.
 
 ### Possible improvements
 
