@@ -3,7 +3,7 @@ package utils;
 
 /**
  * Custom data structure which mimics the behavior of
- * Java's HashMap<String, Integer>
+ * Java's HashMap (String, Integer)
  */
 public class CHashMap {
     
@@ -96,7 +96,7 @@ public class CHashMap {
     private int hashCode(String str) {
         int hash = 7;
         for (int i = 0; i < str.length(); i++) {
-            hash = hash*71 + str.charAt(i);
+            hash = hash * 71 + str.charAt(i);
         }
         return hash % 4096 > 0 ? hash % 4096 : -hash % 4096;
     }
