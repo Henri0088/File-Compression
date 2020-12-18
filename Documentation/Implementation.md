@@ -81,7 +81,10 @@ bigfile was generated using the unix-command
 yes "tobeornottobe, an interesting question indeed....." | head -n 1000000 > bigfile.txt
 ```
 
-LZW seems to be the better algorithm, in terms of decompressing at least. The compression part is more complex, LZW is being hindered by my CHashMap. My hashfunction uses polynomial hashing, however it still generates a lot of collisions slowening the data  structure down.
+Below you can see how the different algorithms scale. Data used was world192.txt concatenated with itself, so world192.txt twice. Vertical axis is time in ms and horizontal axis is amount of characters used in the compression process.
+
+![results](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Algorithm%20comparison.png)
+
 
 ### Possible improvements
 
