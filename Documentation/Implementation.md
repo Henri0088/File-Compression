@@ -85,6 +85,7 @@ Below you can see how the different algorithms scale. Data used was world192.txt
 
 ![results](https://github.com/Henri0088/File-Compression/blob/main/Documentation/Algorithm%20comparison.png)
 
+The algorithms seem to scale linearly as expected. Overall huffman seems to be the quicker of the two. However generally LZW achieves a better compression ratio with data containing natural language. LZW can also achieve very good compression rates if the data is repetitive enough. Lastly, I did change my hash function used by my CHashMap which helped LZW catch up to huffman, however I still think some collisions are happening which perhaps slows down LZW because it uses this data structure more than huffman.
 
 ### Possible improvements
 
